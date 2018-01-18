@@ -70,10 +70,13 @@ x_train, y_train, x_test, y_test = splid_valid_set(X_data, Y_data)
 network = init_network()
 
 # Run forward NN
+batch_size = 100
 accuracy_cnt = 0
-for i in range(x_train.shape[0]):
-    y = predict(network, x_train)
-    p = np.argmax(y)
-    if p == y_train[i]:
-        accuracy_cnt += 1
+
+for i in range(0, x_train.shape[0], batch_size):
+    x_batch = x_train[i:i+batch_size]
+    y_batch = predict(network, x_batch)
+    p = np.argmax(y_batch, axis=1)
+    accuracy_cnt += np.sum(p == y_train[i:i+batch_size])
+    
 print("Accuracy:" + str(float(accuracy_cnt) / x_train.shape[0]))
