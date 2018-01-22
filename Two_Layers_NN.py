@@ -131,6 +131,10 @@ X_data = mnist.data
 Y_data = mnist.target
 print(X_data.shape, Y_data.shape)
 
+Answer = get_onehot(Y_data) 
+x_train, y_train, x_test, y_test = splid_valid_set(X_data, Answer)
+
+
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 iters_num = 10000
 train_size = x_train.shape[0]
