@@ -24,6 +24,16 @@ def softmax_loss(X, t):
 
 def sigmoid_grad(x):
     return (1.0 - sigmoid(x)) * sigmoid(x)
+
+def numerical_gradient(f, X):
+    if X.ndim == 1:
+        return _numerical_gradient_no_batch(f, X)
+    else:
+        grad = np.zeros_like(X)
+        
+        for idx, x in enumerate(X):
+            grad[idx] = _numerical_gradient_no_batch(f, x)
+        return grad
     
 # Two Layers NN 
 class TwoLayerNet:
