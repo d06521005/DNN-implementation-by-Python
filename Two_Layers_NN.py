@@ -25,6 +25,25 @@ def softmax_loss(X, t):
 def sigmoid_grad(x):
     return (1.0 - sigmoid(x)) * sigmoid(x)
 
+def _numerical_gradient_no_batch(f, x):
+    h = 1e-4 # 0.0001
+    grad = np.zeros_like(x)
+    # Return an array of zeros with the same shape and type as a given array.
+    
+    for idx in range(x.size):
+        tmp_val = x[idx]
+        # f(x+h)
+        x[idx] = tmp_val + h
+        fxh1 = f(x)
+        # f(x-h)
+        x[idx] = tmp_val - h
+        fxh2 = f(x)
+        
+        grad[idx] = (fxh1 - fxh2) / (2*h)
+        x[idx] = tmp_val # original value
+    return grad
+
+
 def numerical_gradient(f, X):
     if X.ndim == 1:
         return _numerical_gradient_no_batch(f, X)
