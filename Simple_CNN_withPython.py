@@ -526,7 +526,7 @@ class Trainer:
                                 'adagrad':AdaGrad, 'rmsprpo':RMSprop, 'adam':Adam}
         self.optimizer = optimizer_class_dict[optimizer.lower()](**optimizer_param)
         # (**optimizer_param) = mapping a dict parameter to a class 
-        # in this case：self.optimizer = Object 'SGD' with lr = 0.01
+        # in this case：self.optimizer = Object 'Adam' with lr = 0.01
         
         self.train_size = x_train.shape[0]
         self.iter_per_epoch = max(self.train_size / mini_batch_size, 1)
@@ -545,7 +545,7 @@ class Trainer:
         
         grads = self.network.gradient(x_batch, t_batch)
         self.optimizer.update(self.network.params, grads)
-        # in this case: run SGD
+        # in this case: run 'Adam'
         
         loss = self.network.loss(x_batch, t_batch)
         self.train_loss_list.append(loss)
